@@ -1,0 +1,30 @@
+/* Center align text in table header and cells */
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle; /* Aligns content vertically in the middle */
+  }
+  
+  /* Optional: Adjust table width for better spacing */
+  .table {
+    width: 80%;  /* Adjust the table width as needed */
+    margin: 20px auto; /* Center table on the page */
+  }
+  
+  /* Optional: Style buttons for better appearance */
+  .btn {
+    margin: 0 5px; /* Adds space between buttons */
+  }
+  
+  /* Style for inputs in the form */
+  input {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Align form input containers */
+  div {
+    margin-bottom: 10px;
+  }
+  
