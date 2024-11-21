@@ -117,3 +117,22 @@ exports.deleteTask = async (req, res) => {
         });
     }
 };
+
+exports.getTaskByStaus = async (req, res) => {
+    try {
+          const { status } = req.params;
+          
+          console.log(status);
+          
+      
+          const query = status ? { status } : {};
+          const tasks = await Task.find(query);
+      
+          res.status(200).json(tasks);
+          
+        } catch (error) {
+          console.error("Error fetching tasks:", error);
+          res.status(500).json({ message: "An error occurred while fetching tasks." });
+        }
+};
+

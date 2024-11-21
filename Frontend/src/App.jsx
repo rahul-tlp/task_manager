@@ -12,8 +12,9 @@ function App() {
   const [status, setStatus] = useState('')
   const [isUpdate, setIsUpdate] = useState(false)
   const [ids, setIds] = useState(null);
+  const [filter, setFilter] = useState("");
 
-  const getDta = () => {
+  const getData = () => {
     axios
       .get("http://localhost:8000/tasks")
       .then((res) => {
@@ -21,14 +22,14 @@ function App() {
       })
   };
   useEffect(() => {
-    getDta();
+    getData();
   }, []);
 
   const submit = () => {
     axios
       .post("http://localhost:8000/tasks/", { title,description,status })
       .then(()=>{
-        getDta()
+        getData()
       })
       .then(handleClear())
      
@@ -51,7 +52,7 @@ function App() {
     axios
       .put(`http://localhost:8000/tasks/${ids}`, { title,description,status })
       .then(()=>{
-        getDta()
+        getData()
       })
       .then(handleClear())
   }
@@ -68,11 +69,25 @@ function App() {
       if (window.confirm("Are you sure you want to delete this")) {
         axios.delete("http://localhost:8000/tasks/" + id)
         .then(() => {
-          getDta();
+          getData();
         });
       }
     }
+  };
+
+  const handleStatusChange = async (event) => {
+    const selectedStatus = event.target.value; // Get the selected value
+    console.log('ctedStatus',selectedStatus);
     
+    setFilter(selectedStatus);
+
+    if (selectedStatus !== "status" && selectedStatus != undefined) {
+      console.log('ctedStatus',selectedStatus);
+      axios.get(`http://localhost:8000/tasks/${selectedStatus}`)
+      .then((res) => {
+        setData(res.data);
+      })
+    }
   };
 
   return (
@@ -99,16 +114,20 @@ function App() {
             />
           </label>
         </div>
-        <div style={{ margin: '0 10px' }}>
-          <label>State:
-            <input
-              type="text"
-              value={status}
-              placeholder="Enter State"
-              onChange={(e) => setStatus(e.target.value)}
-            />
-          </label>
+        <div style={{ display: "flex", alignItems: "center", margin: "0 10px" }}>
+          <label style={{ marginRight: "5px" }}>State:</label>
+          <select
+            className="form-select"
+            aria-label="Default select example"
+            style={{ padding: "5px" }}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option selected>Select</option>
+            <option value="Complete">Complete</option>
+            <option value="Pending">Pending</option>
+          </select>
         </div>
+
 
         {
           !isUpdate ?
@@ -146,10 +165,10 @@ function App() {
             <td>Title</td>
             <td>Description</td>
             <td>
-              <select style={{padding:"3px",textAlign:"center", border:"none"}}>
-              <option >Staus</option>
-                <option value="pending">Complete</option>
-                <option value="complete">Pending</option>
+              <select style={{padding:"3px",textAlign:"center", border:"none"}} onChange={handleStatusChange}>
+              <option value="">Status</option>
+                <option value="Complete">Complete</option>
+                <option value="Pending">Pending</option>
               </select>
             </td>
             <td>Action</td>
