@@ -5,8 +5,6 @@
 This Project is divided into two parts frontend and backend
 Frontend is made with React + Bootstrap
 
-backend is made with Node js + Mongo db
-
 ## Available Scripts
 
 # For Frontend
@@ -19,18 +17,7 @@ then
 
 ### `npm run dev`
 
+Deployed application link  - https://taskf.netlify.app/.
 
-# For backend
-
-Initialize project with 
-
-### `npm i`
-
-then 
-
-### `node index.js`
-
-or 
-
-### `nodemon index.js`
+Frontend is deployed on netlify.com
 
